@@ -1,0 +1,16 @@
+{
+  "name": "hollodotme/talks-preps",
+  "description": "In this repository I collect scripts that I use to research and prepare my talks.",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Holger Woltersdorf",
+      "email": "hw@hollo.me"
+    }
+  ],
+  "require": {
+    "php": ">=7.2"
+  }
+}

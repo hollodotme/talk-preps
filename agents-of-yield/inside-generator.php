@@ -5,29 +5,25 @@
 
 namespace hollodotme\TalkPreps\AgentsOfYield;
 
-function genFunction()
+function generate()
 {
-	print 'genFunction - start' . PHP_EOL;
-
+	print 'generate - start' . PHP_EOL;
 	for ( $i = 1; $i <= 5; $i++ )
 	{
-		print 'genFunction - yielding...' . PHP_EOL;
+		print 'generate - yielding...' . PHP_EOL;
 		yield $i;
-		print 'genFunction - continued' . PHP_EOL;
+		print 'generate - continued' . PHP_EOL;
 	}
-
-	print 'genFunction - end' . PHP_EOL;
+	print 'generate - end' . PHP_EOL;
 }
 
-$generator = genFunction();
-
+$generator = generate();
 print 'Generator created' . PHP_EOL;
 
 while ( $generator->valid() )
 {
-	print 'Getting current value from the generator...' . PHP_EOL;
+	print 'Loop gets current value' . PHP_EOL;
 	print $generator->current() . PHP_EOL;
-
 	$generator->next();
 }
 

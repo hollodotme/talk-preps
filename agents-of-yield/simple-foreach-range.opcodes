@@ -1,0 +1,73 @@
+Finding entry points
+Branch analysis from position: 0
+2 jumps found. (Code = 77) Position 1 = 18, Position 2 = 23
+Branch analysis from position: 18
+2 jumps found. (Code = 78) Position 1 = 19, Position 2 = 23
+Branch analysis from position: 19
+1 jumps found. (Code = 42) Position 1 = 18
+Branch analysis from position: 18
+Branch analysis from position: 23
+1 jumps found. (Code = 62) Position 1 = -2
+Branch analysis from position: 23
+filename:       /Users/hollodotme/Sites/hollodotme/talk-preps/agents-of-yield/simple-foreach-range.php
+function name:  (null)
+number of ops:  48
+compiled vars:  !0 = $i
+line     #* E I O op                           fetch          ext  return  operands
+-------------------------------------------------------------------------------------
+   1     0  E >   NOP                                                      
+   6     1        NOP                                                      
+   8     2        NOP                                                      
+   9     3        NOP                                                      
+  11     4        EXT_STMT                                                 
+         5        EXT_FCALL_BEGIN                                          
+         6        INCLUDE_OR_EVAL                                          'range.func.php', REQUIRE
+         7        EXT_FCALL_END                                            
+  13     8        EXT_STMT                                                 
+         9        ECHO                                                     'RANGE%3A%0A%0A'
+  15    10        EXT_STMT                                                 
+        11        INIT_NS_FCALL_BY_NAME                                    
+        12        EXT_FCALL_BEGIN                                          
+        13        SEND_VAL_EX                                              1
+        14        SEND_VAL_EX                                              1000000
+        15        DO_FCALL                                      0  $2      
+        16        EXT_FCALL_END                                            
+        17      > FE_RESET_R                                       $3      $2, ->23
+        18    > > FE_FETCH_R                                               $3, !0, ->23
+  17    19    >   EXT_STMT                                                 
+        20        CONCAT                                           ~4      !0, '.'
+        21        ECHO                                                     ~4
+        22      > JMP                                                      ->18
+        23    >   FE_FREE                                                  $3
+  20    24        EXT_STMT                                                 
+        25        ECHO                                                     '%0A'
+  21    26        EXT_STMT                                                 
+        27        INIT_NS_FCALL_BY_NAME                                    
+        28        EXT_FCALL_BEGIN                                          
+        29        INIT_FCALL                                               'memory_get_peak_usage'
+        30        EXT_FCALL_BEGIN                                          
+        31        SEND_VAL                                                 <true>
+        32        DO_FCALL                                      0  $5      
+        33        EXT_FCALL_END                                            
+        34        DIV                                              ~6      $5, 1024
+        35        DIV                                              ~7      ~6, 1024
+        36        SEND_VAL_EX                                              ~7
+        37        SEND_VAL_EX                                              2
+        38        DO_FCALL                                      0  $8      
+        39        EXT_FCALL_END                                            
+        40        ECHO                                                     $8
+        41        EXT_STMT                                                 
+        42        ECHO                                                     '+MiB'
+  22    43        EXT_STMT                                                 
+        44        ECHO                                                     '%0A'
+  23    45        EXT_STMT                                                 
+        46        ECHO                                                     '%0A'
+        47      > RETURN                                                   1
+
+branch: #  0; line:     1-   15; sop:     0; eop:    17; out0:  18; out1:  23
+branch: # 18; line:    15-   15; sop:    18; eop:    18; out0:  19; out1:  23
+branch: # 19; line:    17-   17; sop:    19; eop:    22; out0:  18
+branch: # 23; line:    17-   23; sop:    23; eop:    47; out0:  -2
+path #1: 0, 18, 19, 18, 23, 
+path #2: 0, 18, 23, 
+path #3: 0, 23, 

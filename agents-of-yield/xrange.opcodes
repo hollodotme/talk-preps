@@ -1,0 +1,64 @@
+Finding entry points
+Branch analysis from position: 0
+1 jumps found. (Code = 62) Position 1 = -2
+filename:       /Users/hollodotme/Sites/hollodotme/talk-preps/agents-of-yield/xrange.func.php
+function name:  (null)
+number of ops:  5
+compiled vars:  none
+line     #* E I O op                           fetch          ext  return  operands
+-------------------------------------------------------------------------------------
+   1     0  E >   NOP                                                      
+   6     1        NOP                                                      
+  15     2        EXT_STMT                                                 
+         3        NOP                                                      
+  22     4      > RETURN                                                   1
+
+Function hollodotme%5Ctalkpreps%5Cagentsofyield%5Cxrange:
+Finding entry points
+Branch analysis from position: 0
+1 jumps found. (Code = 42) Position 1 = 11
+Branch analysis from position: 11
+2 jumps found. (Code = 44) Position 1 = 14, Position 2 = 8
+Branch analysis from position: 14
+1 jumps found. (Code = 161) Position 1 = -2
+Branch analysis from position: 8
+2 jumps found. (Code = 44) Position 1 = 14, Position 2 = 8
+Branch analysis from position: 14
+Branch analysis from position: 8
+filename:       /Users/hollodotme/Sites/hollodotme/talk-preps/agents-of-yield/xrange.func.php
+function name:  hollodotme\TalkPreps\AgentsOfYield\xrange
+number of ops:  16
+compiled vars:  !0 = $start, !1 = $limit, !2 = $step, !3 = $i
+line     #* E I O op                           fetch          ext  return  operands
+-------------------------------------------------------------------------------------
+  15     0  E >   EXT_NOP                                                  
+         1        RECV                                             !0      
+         2        RECV                                             !1      
+         3        RECV_INIT                                        !2      1
+         4        GENERATOR_CREATE                                         
+  17     5        EXT_STMT                                                 
+         6        ASSIGN                                                   !3, !0
+         7      > JMP                                                      ->11
+  19     8    >   EXT_STMT                                                 
+         9        YIELD                                                    !3
+  17    10        ASSIGN_ADD                                    0          !3, !2
+        11    >   IS_SMALLER_OR_EQUAL                              ~7      !3, !1
+        12        EXT_STMT                                                 
+        13      > JMPNZ                                                    ~7, ->8
+  21    14    >   EXT_STMT                                                 
+        15      > GENERATOR_RETURN                                         
+
+End of function hollodotme%5Ctalkpreps%5Cagentsofyield%5Cxrange
+
+branch: #  0; line:     1-   22; sop:     0; eop:     4; out0:  -2
+path #1: 0, 
+branch: #  0; line:    15-   17; sop:     0; eop:     7; out0:  11
+branch: #  8; line:    19-   17; sop:     8; eop:    10; out0:  11
+branch: # 11; line:    17-   17; sop:    11; eop:    13; out0:  14; out1:   8; out2:  14; out3:   8
+branch: # 14; line:    21-   21; sop:    14; eop:    15; out0:  -2
+path #1: 0, 11, 14, 
+path #2: 0, 11, 8, 11, 14, 
+path #3: 0, 11, 8, 11, 14, 
+path #4: 0, 11, 14, 
+path #5: 0, 11, 8, 11, 14, 
+path #6: 0, 11, 8, 11, 14, 

@@ -1,10 +1,8 @@
 <?php declare(strict_types=1);
-
 /**
- * @author  hollodotme
- * @license MIT (See LICENSE file)
- * @link    https://nikic.github.io/2012/12/22/Cooperative-multitasking-using-coroutines-in-PHP.html
+ * @link https://nikic.github.io/2012/12/22/Cooperative-multitasking-using-coroutines-in-PHP.html
  */
+
 final class Task
 {
 	private $taskId;
@@ -108,7 +106,7 @@ final class SystemCall
 		$this->callback = $callback;
 	}
 
-	public function __invoke( Task $task, Scheduler $scheduler )
+	public function __invoke( Task $task, TheFramework $scheduler )
 	{
 		$callback = $this->callback; // Can't call it directly in PHP :/
 
@@ -119,7 +117,7 @@ final class SystemCall
 function getTaskId()
 {
 	return new SystemCall(
-		function ( Task $task, Scheduler $scheduler )
+		function ( Task $task, TheFramework $scheduler )
 		{
 			$task->setSendValue( $task->getTaskId() );
 			$scheduler->schedule( $task );
@@ -138,9 +136,9 @@ function task( $max )
 	}
 }
 
-$scheduler = new Scheduler();
+$scheduler = new TheFramework();
 
-$scheduler->newTask( task( 10 ) );
-$scheduler->newTask( task( 5 ) );
+$scheduler->newAgent( task( 10 ) );
+$scheduler->newAgent( task( 5 ) );
 
 $scheduler->run();

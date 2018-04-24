@@ -7,7 +7,8 @@ function generate()
 
 $generator = generate();
 
-echo 'Type: ', gettype($generator), PHP_EOL;
-echo 'Class: ', get_class($generator), PHP_EOL;
-echo 'Is ', (is_callable($generator) ? 'callable' : 'not callable'), PHP_EOL;
-echo 'Is ', (($generator instanceof Closure) ? 'a Closure' : 'not a Closure'), PHP_EOL;
+echo 'Type: ', gettype( $generator ), PHP_EOL;
+echo 'Class: ', get_class( $generator ), PHP_EOL;
+echo 'Is ', (is_callable( $generator ) ? 'callable' : 'not callable'), PHP_EOL;
+
+$generatorClone = clone $generator;

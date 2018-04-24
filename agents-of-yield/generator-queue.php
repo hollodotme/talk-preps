@@ -22,6 +22,7 @@ function queue( PDO $pdo ) : Generator
 }
 
 $queue = queue( new PDO( 'sqlite::memory:' ) );
+print 'Hidden first value: ' . $queue->current() . PHP_EOL;
 $queue->send( 'Foo' );
 print ' (' . $queue->current() . ')' . PHP_EOL;
 $queue->send( 'Bar' );

@@ -1,20 +1,24 @@
 <?php declare(strict_types=1);
 
-function genFibunacci( int $loops ) : Generator
+function genFibonacci( int $loops ) : Generator
 {
-	$fibunacci = '';
+	$fibonacci = '';
 	for ( $i = 0; $i < $loops; $i++ )
 	{
 		yield $i;
-		$fibunacci .= '.' . round( pow( (sqrt( 5 ) + 1) / 2, $i ) / sqrt( 5 ) );
+
+		$fibonacci .= round(
+			pow( (sqrt( 5 ) + 1) / 2, $i ) / sqrt( 5 )
+		);
 	}
-	return ltrim( $fibunacci, '.' );
+
+	return $fibonacci;
 }
 
-$generator = genFibunacci( 10 );
+$generator = genFibonacci( 10 );
 while ( $generator->valid() )
 {
-	print $generator->current() . '.';
+	print $generator->current();
 	$generator->next();
 }
-print PHP_EOL . 'Fibunacci: ' . $generator->getReturn() . PHP_EOL;
+print PHP_EOL . 'Fibonacci: ' . $generator->getReturn() . PHP_EOL;

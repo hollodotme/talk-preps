@@ -1,8 +1,4 @@
 <?php declare(strict_types=1);
-/**
- * @author  hollodotme
- * @license MIT (See LICENSE file)
- */
 
 function gen()
 {
@@ -11,17 +7,18 @@ function gen()
 }
 
 $gen = gen();
-var_dump( $gen->send( 'something' ) );
+print $gen->send( '' ) . PHP_EOL;
 
 // As the send() happens before the first yield there is an implicit rewind() call,
 // so what really happens is this:
+
 $gen = gen();
 $gen->rewind();
-var_dump( $gen->send( 'something' ) );
+print $gen->send( '' ) . PHP_EOL;
 
 // The rewind() will advance to the first yield (and ignore its value), the send() will
 // advance to the second yield (and dump its value). Thus we loose the first yielded value!
 
 $gen = gen();
-var_dump( $gen->current() );
-var_dump( $gen->send( 'something' ) );
+print $gen->current() . PHP_EOL;
+print $gen->send( '' ) . PHP_EOL;

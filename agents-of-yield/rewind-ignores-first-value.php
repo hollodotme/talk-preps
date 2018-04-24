@@ -20,5 +20,6 @@ print $gen->send( '' ) . PHP_EOL;
 // advance to the second yield (and dump its value). Thus we loose the first yielded value!
 
 $gen = gen();
+$gen->rewind();	# can be omitted
 print $gen->current() . PHP_EOL;
 print $gen->send( '' ) . PHP_EOL;

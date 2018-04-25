@@ -1,24 +1,22 @@
 <?php declare(strict_types=1);
+
 /**
  * @link https://nikic.github.io/2012/12/22/Cooperative-multitasking-using-coroutines-in-PHP.html
  */
-
 final class Agent
 {
-	private $taskId;
-	private $coroutine;
-	private $sendValue;
-	private $beforeFirstYield = true;
+	private $name, $coroutine, $sendValue;
+	private                    $beforeFirstYield = true;
 
-	public function __construct( $taskId, Generator $coroutine )
+	public function __construct( string $name, Generator $coroutine )
 	{
-		$this->taskId    = $taskId;
+		$this->name      = $name;
 		$this->coroutine = $coroutine;
 	}
 
-	public function getTaskId()
+	public function getName() : string
 	{
-		return $this->taskId;
+		return $this->name;
 	}
 
 	public function setSendValue( $sendValue ) : void
@@ -26,7 +24,7 @@ final class Agent
 		$this->sendValue = $sendValue;
 	}
 
-	public function run()
+	public function fight()
 	{
 		if ( $this->beforeFirstYield )
 		{
@@ -41,7 +39,7 @@ final class Agent
 		return $retval;
 	}
 
-	public function isFinished() : bool
+	public function outOfMunitions() : bool
 	{
 		return !$this->coroutine->valid();
 	}
@@ -49,50 +47,46 @@ final class Agent
 
 final class TheFramework
 {
-	private $maxTaskId = 0;
-	private $taskMap   = []; // taskId => task
-	private $backup;
+	private $backup, $agents = [];
 
 	public function __construct()
 	{
 		$this->backup = new SplQueue();
 	}
 
-	public function newAgent( Generator $coroutine ) : int
+	public function newAgent( string $agentName, Generator $coroutine ) : void
 	{
-		$tid                   = ++$this->maxTaskId;
-		$task                  = new Task( $tid, $coroutine );
-		$this->taskMap[ $tid ] = $task;
-		$this->schedule( $task );
+		$agent = new Agent( $agentName, $coroutine );
 
-		return $tid;
+		$this->agents[ $agentName ] = $agent;
+		$this->sendToBattle( $agent );
 	}
 
-	public function schedule( Task $task ) : void
+	public function sendToBattle( Agent $task ) : void
 	{
 		$this->backup->enqueue( $task );
 	}
 
-	public function run() : void
+	public function fight() : void
 	{
 		while ( !$this->backup->isEmpty() )
 		{
-			$task   = $this->backup->dequeue();
-			$retval = $task->run();
+			$agent  = $this->backup->dequeue();
+			$retval = $agent->fight();
 
 			if ( $retval instanceof SystemCall )
 			{
-				$retval( $task, $this );
+				$retval( $agent, $this );
 				continue;
 			}
 
-			if ( $task->isFinished() )
+			if ( $agent->outOfMunitions() )
 			{
-				unset( $this->taskMap[ $task->getTaskId() ] );
+				unset( $this->agents[ $agent->getName() ] );
 				continue;
 			}
 
-			$this->schedule( $task );
+			$this->sendToBattle( $agent );
 		}
 	}
 }
@@ -106,39 +100,43 @@ final class SystemCall
 		$this->callback = $callback;
 	}
 
-	public function __invoke( Task $task, TheFramework $scheduler )
+	public function __invoke( Agent $agent, TheFramework $battleGround )
 	{
-		$callback = $this->callback; // Can't call it directly in PHP :/
+		$callback = $this->callback;
 
-		return $callback( $task, $scheduler );
+		return $callback( $agent, $battleGround );
 	}
 }
 
-function getTaskId()
+function getAgentName()
 {
 	return new SystemCall(
-		function ( Task $task, TheFramework $scheduler )
+		function ( Agent $agent, TheFramework $battleGround )
 		{
-			$task->setSendValue( $task->getTaskId() );
-			$scheduler->schedule( $task );
+			$agent->setSendValue( $agent->getName() );
+			$battleGround->sendToBattle( $agent );
 		}
 	);
 }
 
-function task( $max )
+function agent( $max )
 {
-	$tid = yield getTaskId(); // <-- here's the system call!
+	$agentName = yield getAgentName();
 
 	for ( $i = 1; $i <= $max; ++$i )
 	{
-		echo "This is task $tid iteration $i.\n";
+		print "Agent {$agentName} fires shot {$i}." . PHP_EOL;
 		yield;
 	}
+
+	print "Agent {$agentName} is out of munitions." . PHP_EOL;
 }
 
 $battleGround = new TheFramework();
 
-$battleGround->newAgent( task( 10 ) );
-$battleGround->newAgent( task( 5 ) );
+$battleGround->newAgent( 'Coulson', agent( 12 ) );
+$battleGround->newAgent( 'Mack', agent( 5 ) );
 
-$battleGround->run();
+$battleGround->fight();
+
+print 'Game Over' . PHP_EOL;

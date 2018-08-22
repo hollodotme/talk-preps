@@ -14,7 +14,7 @@ function gen() : Generator
 		}
 		catch ( RuntimeException $e )
 		{
-			echo 'Stopping coroutine.';
+			echo $e->getMessage();
 			break;
 		}
 	}
@@ -24,6 +24,6 @@ $generator = gen();
 $generator->send( 'Hello ' );
 $generator->throw( new LogicException( 'Raised inside the generator.' ) );
 $generator->send( 'World' );
-$generator->throw( new RuntimeException( 'Raised inside the generator.' ) );
+$generator->throw( new RuntimeException( 'Stopping coroutine.' ) );
 $generator->send( 'of tomorrow' );
 

@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  php:
+    image: php:7.3-fpm
+    volumes:
+      - ./:/code
+
+  nginx:
+    image: nginx
+    volumes:
+      - ./:/code
+      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 8080:80
